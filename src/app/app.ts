@@ -9,4 +9,6 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('cicd-angular');
+  // ERROR a propósito: variableNoDeclarada no existe
+  protected readonly saludo = signal(variableNoDeclarada);
 }
