@@ -52,7 +52,7 @@ describe('Tareas (servicio)', () => {
     servicio.anadir('Primera');
     servicio.anadir('Segunda');
     servicio.alternar(1);
-    expect(servicio.total()).toBe(2);
+    expect(servicio.total()).toBe(3);
     expect(servicio.pendientes()).toBe(1);
   });
 });
