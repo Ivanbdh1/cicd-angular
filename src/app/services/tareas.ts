@@ -45,4 +45,27 @@ export class Tareas {
   total(): number {
     return this.lista().length;
   }
+
+  // Método nuevo SIN test (se añade a propósito para que baje la cobertura)
+  nivelDeTrabajo(): string {
+    const pendientes = this.pendientes();
+    const total = this.total();
+    let mensaje = '';
+    if (total === 0) {
+      mensaje = 'Sin tareas';
+    } else if (pendientes === 0) {
+      mensaje = 'Todo terminado';
+    } else if (pendientes === 1) {
+      mensaje = 'Casi terminado';
+    } else if (pendientes <= 3) {
+      mensaje = 'Poco trabajo';
+    } else if (pendientes <= 6) {
+      mensaje = 'Trabajo medio';
+    } else {
+      mensaje = 'Mucho trabajo';
+    }
+    const porcentaje = total === 0 ? 0 : Math.round(((total - pendientes) / total) * 100);
+    mensaje = mensaje + ' (' + porcentaje + '% hecho)';
+    return mensaje;
+  }
 }
