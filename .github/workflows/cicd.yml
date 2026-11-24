@@ -28,6 +28,21 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
+      # Tests en modo no interactivo (--no-watch) con cobertura.
+      # Los umbrales mínimos (80 % y 70 % en ramas) están en angular.json:
+      # si no se alcanzan o un test falla, este paso falla y el job también.
+      - name: Ejecutar tests con cobertura
+        run: npx ng test --no-watch --coverage
+
+      # Se sube el informe aunque los tests fallen (always) para poder revisarlo
+      - name: Subir informe de cobertura
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: informe-cobertura
+          path: coverage
+          if-no-files-found: ignore
+
       - name: Compilar Angular
         run: npx ng build --base-href /cicd-angular/
 
