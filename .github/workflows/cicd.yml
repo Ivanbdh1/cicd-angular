@@ -1,14 +1,18 @@
 name: Angular CI/CD
 
-# Cuándo se ejecuta: en cada pull request dirigida a main
+# Cuándo se ejecuta: en cada pull request hacia main (CI)
+# y en cada push a main, es decir, cuando se fusiona una PR (CI + CD)
 on:
   pull_request:
+    branches: [main]
+  push:
     branches: [main]
 
 jobs:
   # Job de CI: compila el proyecto
   build:
     runs-on: ubuntu-latest
+    # Permisos mínimos: solo leer el código
     permissions:
       contents: read
     steps:
@@ -26,3 +30,30 @@ jobs:
 
       - name: Compilar Angular
         run: npx ng build --base-href /cicd-angular/
+
+      # Solo se sube el artefacto cuando el evento es un push (en una PR no se publica nada)
+      - name: Subir artefacto de Pages
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/cicd-angular/browser
+
+  # Job de CD: publica la web en GitHub Pages
+  deploy:
+    # needs: solo empieza cuando el job build ha terminado bien
+    needs: build
+    # if: solo se ejecuta en push a main (nunca en una PR)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # Permisos mínimos que necesita el despliegue en Pages
+    permissions:
+      pages: write
+      id-token: write
+    # Entorno github-pages: muestra la URL de la web desplegada
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Desplegar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
