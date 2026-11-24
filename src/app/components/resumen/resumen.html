@@ -1,0 +1,7 @@
+<p class="resumen">
+  @if (tareas.total() > 0 && tareas.pendientes() === 0) {
+    <span class="completo">¡Todo hecho! 🎉</span>
+  } @else {
+    <span class="pendientes">Pendientes: {{ tareas.pendientes() }} de {{ tareas.total() }}</span>
+  }
+</p>

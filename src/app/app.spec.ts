@@ -5,20 +5,21 @@ describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it('should render title', async () => {
+  it('muestra el título de la práctica', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Práctica 4 CI/CD');
+    const html = fixture.nativeElement as HTMLElement;
+    expect(html.querySelector('h1')?.textContent).toContain('Práctica 4 CI/CD');
+  });
+
+  it('incluye el resumen y la lista de tareas', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const html = fixture.nativeElement as HTMLElement;
+    expect(html.querySelector('app-resumen')).not.toBeNull();
+    expect(html.querySelector('app-lista-tareas')).not.toBeNull();
   });
 });

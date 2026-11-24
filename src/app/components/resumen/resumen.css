@@ -1,0 +1,10 @@
+.resumen {
+  max-width: 420px;
+  margin: 1rem auto;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.completo {
+  color: #1a7f37;
+}

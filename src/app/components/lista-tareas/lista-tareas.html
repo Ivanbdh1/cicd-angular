@@ -1,0 +1,19 @@
+<section class="lista">
+  <h2>Mis tareas</h2>
+
+  <div class="formulario">
+    <input #caja type="text" placeholder="Nueva tarea" (keyup.enter)="anadir(caja)" />
+    <button type="button" class="anadir" (click)="anadir(caja)">Añadir</button>
+  </div>
+
+  <ul>
+    @for (tarea of tareas.lista(); track tarea.id) {
+      <li [class.hecha]="tarea.hecha">
+        <span class="texto" (click)="tareas.alternar(tarea.id)">{{ tarea.texto }}</span>
+        <button type="button" class="borrar" (click)="tareas.eliminar(tarea.id)">Borrar</button>
+      </li>
+    } @empty {
+      <li class="vacia">No hay tareas todavía</li>
+    }
+  </ul>
+</section>
