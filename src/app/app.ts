@@ -11,4 +11,5 @@ import { Resumen } from './components/resumen/resumen';
 })
 export class App {
   protected readonly title = signal('Práctica 4 CI/CD');
+  protected readonly prueba = signal(variablenoexiwadawdsdafa);
 }
